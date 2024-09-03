@@ -26,6 +26,11 @@ const shuffle = (currentArray) => {
   return array;
 };
 
+//This is the maxOfTwoNumbers function to return the largest number
+function maxOfTwoNumbers(num1, num2){
+  return (num1>num2)?num1:num2; //using ternary operator
+}
+
 describe('Find the maximum', () => {
   test('should declare a function named maxOfTwoNumbers', () => {
     expect(typeof maxOfTwoNumbers).toBe('function');
@@ -45,6 +50,22 @@ describe('Find the maximum', () => {
     expect(maxOfTwoNumbers(4, 4)).toBe(4);
   });
 });
+
+//This is the findLongestWord function to return longest word
+function findLongestWord(words) {
+  if (words.length === 0) {
+      return null; // Handle the case where the input list is empty
+  }
+
+  let longestWord = words[0];
+  
+  for (let word of words) {
+      if (word.length > longestWord.length) {
+          longestWord = word;
+      }
+  }
+  return longestWord;
+}
 
 describe('Find the longest word', () => {
   test('should declare a function named findLongestWord', () => {
@@ -73,6 +94,15 @@ describe('Find the longest word', () => {
   });
 });
 
+// This is the sumNumbers function to calculate the sum of the numbers in the array
+function sumNumbers(numbers){
+  let summ=0;
+  for(num of numbers){
+    summ+=num;
+  }
+  return summ;
+}
+
 describe('Calculate the sum of array of numbers', () => {
   test('should declare a function named sumNumbers', () => {
     expect(typeof sumNumbers).toBe('function');
@@ -94,6 +124,24 @@ describe('Calculate the sum of array of numbers', () => {
     expect(sumNumbers([10, 5, 4, 32, 8])).toBe(59);
   });
 });
+
+/*This is the sum() function to calculate the sum of the array
+  calculate the summ of the numbers in the array. If there are strings, 
+  then calculate the length of the string the add to the sum */
+function sum(mixedArr){
+  let mixedArrSum=0;
+  for(item of mixedArr){
+    if(typeof(item)==="number"){
+      mixedArrSum += item;
+    }
+    else if(typeof(item)==="boolean"){
+      mixedArrSum += (item==true)?1:0;
+    }
+    else if(typeof(item)==="string"){
+      mixedArrSum += item.length;
+    }
+  }
+}
 
 describe('Bonus: Calculate the sum', () => {
   test('should declare a function named sum', () => {
@@ -136,6 +184,11 @@ describe('Bonus: Calculate the sum', () => {
   });
 });
 
+//This is the function to calculate the average of the numbers in the array.
+function averageNumbers(numbers){
+  return sumNumbers(numbers)/numbers.length;
+}
+
 describe('Calculate the average of an array of numbers', () => {
   test('should declare a function named averageNumbers', () => {
     expect(typeof averageNumbers).toBe('function');
@@ -158,6 +211,15 @@ describe('Calculate the average of an array of numbers', () => {
   });
 });
 
+//This is the averageWordLength() function to calculate the average length of the words in an array
+function averageWordLength(words){
+  let wordLength=0;
+  for(item of words){
+    wordLength += item.length;
+  }
+  return wordLength/words.length;
+}
+
 describe('Calculate the average of an array of strings', () => {
   test('should declare a function named averageWordLength', () => {
     expect(typeof averageWordLength).toBe('function');
@@ -178,6 +240,12 @@ describe('Calculate the average of an array of strings', () => {
   });
 });
 
+/*This is the avg() function to calculate the average length of the mixed array
+  that contains numbers, strings and boolean data types*/
+function avg(mixedArr){
+  return sum(mixedArr)/mixedArr.length;
+}
+
 describe('Bonus: Calculate the average of a mixed elements array', () => {
   test('should declare a function named avg', () => {
     expect(typeof avg).toBe('function');
@@ -194,6 +262,24 @@ describe('Bonus: Calculate the average of a mixed elements array', () => {
     expect(avg([6, 12, 'miami', 1, 'barca', '200', 'lisboa', 8, true])).toBe(47/9);
   });
 });
+
+//This is the uniquifyArray() to return a new array with unique elements
+/*
+This is the formal approach
+function uniquifyArray(words){
+  let uniqueArray = [];
+  for(let i=0;i<words.length;i++){
+    if(uniqueArray.indexOf(words[i]===-1)){
+      uniqueArray.push(words[i]);
+    }
+  }
+  return uniqueArray;
+}*/
+
+// This is the optimal solution
+function uniquifyArray(words){
+  return [...new Set(words)];
+}
 
 describe('Unique array', () => {
   test('should declare a function named uniquifyArray', () => {
@@ -219,6 +305,21 @@ describe('Unique array', () => {
   });
 });
 
+//This is the doesWordExist() function to check whether the given word is existed in the array or not.
+/*function doesWordExist(words,word){
+  for(let i=0;i<words.length;i++){
+    if(words[i]===word){
+      return true;
+    }
+  }
+  return false;
+}*/
+function doesWordExist(words, word){
+  const wordSet = new Set(words);
+  return wordSet.has(word);
+}
+
+
 describe('Find elements', () => {
   test('should declare a function named doesWordExist', () => {
     expect(typeof doesWordExist).toBe('function');
@@ -240,6 +341,17 @@ describe('Find elements', () => {
     expect(doesWordExist(['pizza', 'sandwich', 'snack', 'soda', 'book', 'computer'], 'book')).toBe(true);
   });
 });
+
+//This is the howManyTimes() function to return the count of the word in the array
+function howManyTimes(words, word){
+  let count=0;
+  for(item of words){
+    if(word==item){
+      count++;
+    }
+  }
+  return count;
+}
 
 describe('Count repetition', () => {
   test('should declare a function named howManyTimes', () => {
@@ -279,6 +391,105 @@ describe('Count repetition', () => {
     ).toBe(5);
   });
 });
+
+function greatestProduct(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  let maxProduct = 0;
+
+  // Function to check the product of four numbers in a given array
+  function checkProduct(arr) {
+    for (let i = 0; i <= arr.length - 4; i++) {
+      const product = arr[i] * arr[i + 1] * arr[i + 2] * arr[i + 3];
+      if (product > maxProduct) {
+        maxProduct = product;
+      }
+    }
+  }
+
+  // Check horizontally
+  for (let row = 0; row < rows; row++) {
+    checkProduct(matrix[row]);
+  }
+
+  // Check vertically
+  for (let col = 0; col < cols; col++) {
+    const verticalArray = matrix.map(row => row[col]);
+    checkProduct(verticalArray);
+  }
+
+  // Check diagonally (left-to-right)
+  for (let row = 0; row <= rows - 4; row++) {
+    for (let col = 0; col <= cols - 4; col++) {
+      const diagArray = [
+        matrix[row][col],
+        matrix[row + 1][col + 1],
+        matrix[row + 2][col + 2],
+        matrix[row + 3][col + 3]
+      ];
+      checkProduct(diagArray);
+    }
+  }
+
+  // Check diagonally (right-to-left)
+  for (let row = 0; row <= rows - 4; row++) {
+    for (let col = 3; col < cols; col++) {
+      const diagArray = [
+        matrix[row][col],
+        matrix[row + 1][col - 1],
+        matrix[row + 2][col - 2],
+        matrix[row + 3][col - 3]
+      ];
+      checkProduct(diagArray);
+    }
+  }
+
+  return maxProduct;
+}
+
+function greatestProductOfDiagonals(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  let maxProduct = 0;
+
+  // Function to check the product of four numbers in a given diagonal array
+  function checkProduct(arr) {
+    for (let i = 0; i <= arr.length - 4; i++) {
+      const product = arr[i] * arr[i + 1] * arr[i + 2] * arr[i + 3];
+      if (product > maxProduct) {
+        maxProduct = product;
+      }
+    }
+  }
+
+  // Check diagonals (top-left to bottom-right)
+  for (let row = 0; row <= rows - 4; row++) {
+    for (let col = 0; col <= cols - 4; col++) {
+      const diagArray = [
+        matrix[row][col],
+        matrix[row + 1][col + 1],
+        matrix[row + 2][col + 2],
+        matrix[row + 3][col + 3]
+      ];
+      checkProduct(diagArray);
+    }
+  }
+
+  // Check diagonals (top-right to bottom-left)
+  for (let row = 0; row <= rows - 4; row++) {
+    for (let col = 3; col < cols; col++) {
+      const diagArray = [
+        matrix[row][col],
+        matrix[row + 1][col - 1],
+        matrix[row + 2][col - 2],
+        matrix[row + 3][col - 3]
+      ];
+      checkProduct(diagArray);
+    }
+  }
+
+  return maxProduct;
+}
 
 describe('Bonus Quest - greatestProduct', () => {
   test('should declare a function named greatestProduct', () => {
